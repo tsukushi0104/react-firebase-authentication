@@ -5,10 +5,9 @@ import { auth } from '../../firebase';
 import * as routes from '../../constants/routes';
 import { Button, Header, Form } from 'semantic-ui-react'
 
-const PasswordForgetPage = () =>
+const ProfileEditPage = () =>
   <div>
-    <h1>PasswordForget</h1>
-    <PasswordForgetForm />
+    <ProfileEditForm />
   </div>
 
 const updateByPropertyName = (propertyName, value) => () => ({
@@ -20,7 +19,7 @@ const INITIAL_STATE = {
   error: null,
 };
 
-class PasswordForgetForm extends Component {
+class ProfileEditForm extends Component {
   constructor(props) {
     super(props);
 
@@ -28,16 +27,6 @@ class PasswordForgetForm extends Component {
   }
 
   onSubmit = (event) => {
-    const { email } = this.state;
-
-    auth.doPasswordReset(email)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-      })
-      .catch(error => {
-        this.setState(updateByPropertyName('error', error));
-      });
-
     event.preventDefault();
   }
 
@@ -51,7 +40,7 @@ class PasswordForgetForm extends Component {
 
     return (
       <Form onSubmit={this.onSubmit}>
-        <Header as='h3'>Password Reset</Header>
+        <Header as='h3'>Profile</Header>
         <Form.Input
           value={this.state.email}
           onChange={event => this.setState(updateByPropertyName('email', event.target.value))}
@@ -59,7 +48,7 @@ class PasswordForgetForm extends Component {
           placeholder="Email Address"
         />
         <Form.Button disabled={isInvalid} type="submit">
-          Reset My Password
+          Update
         </Form.Button>
 
         { error && <p>{error.message}</p> }
@@ -68,14 +57,14 @@ class PasswordForgetForm extends Component {
   }
 }
 
-const PasswordForgetLink = () =>
+const ProfileEditLink = () =>
   <p>
-    <Link to={routes.PASSWORD_FORGET}>Forgot Password?</Link>
+    <Link to={routes.ACCOUNT}>Edit Profile</Link>
   </p>
 
-export default PasswordForgetPage;
+export default ProfileEditPage;
 
 export {
-  PasswordForgetForm,
-  PasswordForgetLink,
+  ProfileEditForm,
+  ProfileEditLink,
 };

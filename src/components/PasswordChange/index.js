@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import { auth } from '../../firebase';
+import { Button, Header, Form } from 'semantic-ui-react'
+
 
 const updateByPropertyName = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -45,25 +47,26 @@ class PasswordChangeForm extends Component {
       passwordOne === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <Form onSubmit={this.onSubmit}>
+        <Header as='h3'>Password Change</Header>
+        <Form.Input
           value={passwordOne}
           onChange={event => this.setState(updateByPropertyName('passwordOne', event.target.value))}
           type="password"
           placeholder="New Password"
         />
-        <input
+        <Form.Input
           value={passwordTwo}
           onChange={event => this.setState(updateByPropertyName('passwordTwo', event.target.value))}
           type="password"
           placeholder="Confirm New Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <Form.Button disabled={isInvalid} type="submit">
           Reset My Password
-        </button>
+        </Form.Button>
 
         { error && <p>{error.message}</p> }
-      </form>
+      </Form>
     );
   }
 }
